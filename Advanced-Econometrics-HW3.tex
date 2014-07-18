@@ -1,0 +1,714 @@
+\documentclass[11pt]{article}
+%\usepackage{amsmath, amsthm, enumerate, graphicx, bm, type1cm, amssymb}
+
+\usepackage{amsmath,amsthm,enumerate,graphicx,bm,type1cm,amssymb,epsfig,lscape,setspace,amssymb,url,color,tabu,xcolor,colortbl,rotating,tikz}
+
+
+\bibliographystyle{econometrica}
+
+%\usepackage{amsmath, amsthm, enumerate, graphicx, bm, type1cm, amssymb, natbib, remreset}
+%\usepackage{natbib}
+%\usepackage{setspace}
+\theoremstyle{definition}
+\newtheorem{mc}{MC}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{prop}{Proposition}[section]
+\newtheorem{pr}{Proof}
+
+\newtheorem{assump}{Assumption}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{definition}{Definition}[section]
+% \def\stackunder#1#2{\mathrel{\mathop{#2}\limits_{#1}}}
+% \renewcommand{\theequation}{\thesection.\arabic{equation}}
+\newtheorem{corol}{Corollary}[section]
+\newcommand{\argmax}{\mathop{\rm \textit{arg} \ \textit{max}}\limits}
+\newcommand{\argmin}{\mathop{\rm \textit{arg} \ \textit{min}}\limits}
+
+\newcommand{\vecop}{{\rm vec}}
+\newcommand{\E}{{\rm E}}
+\newcommand{\Var}{{\rm Var}}
+\newcommand{\determinant}{{\rm det}}
+\newcommand{\tr}{{\rm tr}}
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+
+\def\inprob{\stackrel{p}{\rightarrow}}
+\def\ninprob{\stackrel{p}{\nrightarrow}}
+\def\indist{\stackrel{d}{\rightarrow}}
+\def\nindist{\stackrel{d}{\nrightarrow}}
+\def\as{\stackrel{a.s.}{\rightarrow}}
+\def\betahn{\hat{\beta}_{n}}
+\def\betao{\beta^{0}}
+\def\sumin{\sum_{i=1}^{n}}
+\def\sumjn{\sum_{i=1}^{n}}
+\def\thetahn{\hat{\theta}_{n}}
+\def\Ho{$H_{0} \ : \ a(\beta^{0})=0$}
+\def\abhat{$a(\hat{\beta})$}
+\def\abo{$a(\beta^{0})$}
+\def\Abbar{$A(\bar{\beta})$}
+\def\bhat{$\hat{\beta}$}
+\def\bo{$\beta^{0}$}
+
+\setlength{\oddsidemargin}{5mm}
+\setlength{\textwidth}{16cm}
+\setlength{\topmargin}{0pt}
+\setlength{\headheight}{0pt}
+\setlength{\headsep}{0pt}
+\setlength{\textheight}{23cm}
+\onehalfspacing
+
+\definecolor{Gray}{gray}{0.85}
+
+\title{Homework 3}
+\author{Robert Ackerman \\ University of North Carolina}
+%rkackerm@live.unc.edu}} }
+\date{January 21, 2014}							% Activate to display a given date or no date
+
+\begin{document}
+\maketitle
+\section{Construct the Wald, LM, and LR test for this purpose}
+First, here are two important results that we will need: \\
+
+\noindent
+\circled{A} $\sqrt{n}(\hat{\beta}-\beta^{0}) \indist N(0,\Sigma^{-1})$, where $ \Sigma^{-1} \equiv (G'S^{-1}G)^{-1}$ \\ 
+
+\textbf{Proof:}\\ 
+
+Population Objective Function: $Q(\beta)=\bar{g}(\beta)'S^{-1}\bar{g}(\beta)$ s.t. $\bar{g}(\beta)=\mathbb{E}[g(Z,\beta)]$, and \\
+\indent
+$S^{-1}=\mathbb{E}[g(Z,\beta)g(Z,\beta)']$ and $G\equiv \frac{\partial}{\partial \beta}\bar{g}_{n}(\beta)$ \\
+
+Sample Objective Function: $Q_{n}(\beta)=\bar{g}_{n}(\beta)'S_{n}^{-1}\bar{g}_{n}(\beta)$ s.t. $\bar{g}_{n}(\beta)=\frac{1}{n}\sum_{i=1}^{n}g(Z_{i},\beta)$ (and \\
+\indent
+in the same way $S_{n}^{-1}$ is the sample counterpart to $S^{-1}$)\\
+
+$\hat{\beta}$ minimizes $Q_{n}$, taking the F.O.C. w.r.t. $\beta$: \\
+
+$\frac{\partial}{\partial \beta}Q_{n}(\beta)=\bar{G}_{n}'(\hat{\beta}_{n})S_{n}^{-1}\bar{g}_{n}(\hat{\beta}_{n})=0, \ \text{where} \ \bar{G}_{n} \equiv \frac{\partial}{\partial \beta}\bar{g}_{n}(\hat{\beta}_{n})$ \\
+
+Taking a mean value expansion of $\bar{g}_{n}(\hat{\beta}_{n})$ yields: \\
+
+$\bar{g}_{n}(\hat{\beta}_{n})=\bar{g}_{n}(\beta^{0})+\bar{G}_{n}(\bar{\beta})(\hat{\beta}_{n}-\beta^{0})+o_{p}(1)$ \\
+
+Plugging this result into the preceding equation: \\
+
+$\bar{G}_{n}'(\hat{\beta}_{n})S_{n}^{-1}\bar{g}_{n}(\hat{\beta}_{n})=\bar{G}_{n}'(\hat{\beta}_{n})S_{n}^{-1}\bar{g}_{n}(\beta^{0})+\bar{G}_{n}'(\hat{\beta}_{n})S_{n}^{-1}\bar{G}_{n}(\bar{\beta})(\hat{\beta}_{n}-\beta^{0})+ \bar{G}_{n}'(o_{p}(1)) $ \\
+
+Note: $\bar{G}_{n}(\hat{\beta}_{n}) \inprob G$, $\bar{G}_{n}(\bar{\beta}) \inprob G$, $S_{n}^{-1} \inprob S^{-1}$, and $\bar{G}_{n}'(o_{p}(1)) \inprob 0$ So, \\
+
+$G'S^{-1}\bar{g}_{n}(\beta^{0})+ G'S^{-1}G(\hat{\beta}_{n}-\beta^{0})=0$ Rearranging gives: \\
+
+$(\hat{\beta}_{n}-\beta^{0})=-\left(G'S^{-1}G\right)^{-1}G'S^{-1}\bar{g}_{n}(\beta^{0})$, multiplying by $\sqrt{n}$: \\
+
+$\sqrt{n}(\hat{\beta}_{n}-\beta^{0})=-\left(G'S^{-1}G\right)^{-1}G'S^{-1}\sqrt{n}\bar{g}_{n}(\beta^{0})$, and \\
+
+$\sqrt{n}\bar{g}_{n}(\beta^{0}) \indist N(0,S)$ (CLT) $\therefore$ \\
+
+$\sqrt{n}(\hat{\beta}_{n}-\beta^{0}) \indist N(0,(G'S^{-1}G)^{-1})$ (Slutsky's) $\because$ \\
+
+$(G'S^{-1}G)^{-1}G'S^{-1}SS^{-1}G(G'S^{-1}G)^{-1}=$ \\
+
+$(G'S^{-1}G)^{-1}G'S^{-1}G(G'S^{-1}G)^{-1}=$ \\
+
+$(G'S^{-1}G)^{-1}\equiv \Sigma^{-1}$ (as defined above) So, \\
+
+$\sqrt{n}(\hat{\beta}_{n}-\beta^{0}) \indist N(0,(G'S^{-1}G)^{-1})=N(0,\Sigma^{-1}) \qed$ \\
+
+\noindent
+\circled{B} $\sqrt{n}\frac{\partial}{\partial \beta}Q_{n}(\beta^{0}) \indist N(0,\Sigma)$ \\
+
+\textbf{Proof:} \\
+
+Plug $\beta^{0}$ into $\frac{\partial}{\partial \beta}Q_{n}(\beta)$: \\
+
+$\frac{\partial}{\partial \beta}Q_{n}(\beta^{0})=\bar{G}_{n}'(\beta^{0})S_{n}^{-1}\bar{g}_{n}(\beta^{0})$ multiply by $\sqrt{n}$: \\
+
+$\sqrt{n}\frac{\partial}{\partial \beta}Q_{n}(\beta^{0})=\bar{G}_{n}'(\beta^{0})S_{n}^{-1}\sqrt{n}\bar{g}_{n}(\beta^{0})$ \\
+
+Again, $\bar{G}_{n}(\hat{\beta}_{n}) \inprob G$, $S_{n}^{-1} \inprob S^{-1}$ \\
+
+Note: $\sqrt{n}\bar{g}_{n}(\beta^{0}) \indist N(0,S)$ (CLT) $\therefore$ \\
+
+$\bar{G}_{n}'(\beta^{0})S^{-1}\sqrt{n}\bar{g}_{n}(\beta^{0}) \indist N(0,G'S^{-1}SS^{-1}G)=N(0,G'S^{-1}G)=N(0,\Sigma) \qed$
+
+
+
+\subsection{Wald}
+\textbf{(a)} under \Ho, \ Compare \ \abhat \ \& \ \abo  \\ 
+\begin{equation*}
+\begin{split}
+\sqrt{n}a(\hat{\beta}) & =\sqrt{n}[a(\beta^{0})+A(\bar{\beta})(\hat{\beta}-\beta^{0})], \ \text{where}: \ A(\beta)=\frac{\partial a}{\partial \beta'}(\beta) \\
+ & = A(\bar{\beta})\sqrt{n}(\hat{\beta}-\beta^{0}), \ \text{since} \ \text{under} \ H_{0}: \ a(\beta^{0})=0 \\
+ & \text{Define} \ A_{0}=A(\beta^{0}) \\
+ & = A_{0}\sqrt{n}(\hat{\beta}-\beta^{0}) + op(1), \ \text{by} \ \circled{A} \ A_{0}\sqrt{n}(\hat{\beta}-\beta^{0}) 
+\indist N(0,A_{0}\Sigma^{-1}A_{0}') \\
+ & \text{Define} \ \Omega=A_{0}\Sigma^{-1}A_{0}' \ \text{and let} \ LL'=\Omega \ \text{be a Cholesky decompositon} \\
+ & \implies L^{-1}\sqrt{n}a(\hat{\beta}) \indist N(0,I)
+\end{split}
+\end{equation*}
+
+This gives our Wald under the null:
+\begin{equation*}
+\begin{split}
+W & \equiv \left(\hat{L}^{-1}\sqrt{n}a(\hat{\beta})\right)'\left(\hat{L}^{-1}\sqrt{n}a(\hat{\beta})\right) \\
+ & =na(\hat{\beta})'(\hat{L}^{-1})'\hat{L}^{-1}a(\hat{\beta}) \\
+ & =na(\hat{\beta})'\hat{\Omega}^{-1}a(\hat{\beta}) \rightarrow \chi^{2}_{r}
+\end{split}
+\end{equation*}
+
+\noindent
+\textbf{(b)} under $H_{l}: \ a(\beta^{0})=\frac{\delta}{\sqrt{n}}$
+\begin{equation*}
+\begin{split}
+\sqrt{n}a(\hat{\beta}) &=\sqrt{n}\left[a(\beta^{0})+A(\bar{\beta})(\hat{\beta}-\beta^{0})\right] \\
+ & =\sqrt{n}\left[\frac{\delta}{\sqrt{n}}+A(\bar{\beta})(\hat{\beta}-\beta^{0})\right] \\
+ & =\delta+A(\bar{\beta})\sqrt{n}(\hat{\beta}-\beta^{0}) \\
+ & \circled{A} \implies \sqrt{n}a(\hat{\beta})\indist N(\delta,\Omega) \\
+ & \& \ L^{-1}\sqrt{n}a(\hat{\beta})\indist N(L^{-1}\delta,I)
+\end{split}
+\end{equation*}
+
+This gives our Wald under the local alternative:
+
+\begin{equation*}
+\begin{split}
+W & \equiv \left(\hat{L}^{-1}\sqrt{n}a(\hat{\beta})\right)'\left(\hat{L}^{-1}\sqrt{n}a(\hat{\beta})\right) \\
+ & =na(\hat{\beta})'(\hat{L}^{-1})'\hat{L}^{-1}a(\hat{\beta}) \\
+ & =na(\hat{\beta})'\hat{\Omega}^{-1}a(\hat{\beta}) \rightarrow \chi^{2}_{r}(\kappa)
+\end{split}
+\end{equation*}
+
+Where $\kappa$ is a non-centrality parameter s.t.: \\
+
+$\kappa = \left(L^{-1}\delta\right)'\left(L^{-1}\delta\right)=\delta'\left(L^{-1}\right)'L^{-1}\delta=\delta'\left(L^{'}\right)^{-1}L^{-1}\delta=\delta'\left(LL'\right)^{-1}\delta=\delta'\Omega^{-1}\delta$
+
+\vspace{15mm}
+\noindent
+\textbf{(c)} under $H_{f}: \ a(\beta^{0})\neq 0$
+
+Let's call our choice of a fixed alternative $\delta$ s.t.  $a(\beta^{0})= \delta$
+\begin{equation*}
+\begin{split}
+\sqrt{n}a(\hat{\beta}) &=\sqrt{n}\left[a(\beta^{0})+A(\bar{\beta})(\hat{\beta}-\beta^{0})\right] \\
+ & =\sqrt{n}\left[\delta+A(\bar{\beta})(\hat{\beta}-\beta^{0})\right] \\
+ &=\sqrt{n}\delta + \sqrt{n}A(\bar{\beta})(\hat{\beta}-\beta^{0}) \\
+ & \circled{A} \implies \sqrt{n}a(\hat{\beta}) \indist N(\sqrt{n}\delta, \Omega) \\
+ & \& \ L^{-1}\sqrt{n}a(\hat{\beta}) \indist N(L^{-1}\sqrt{n}\delta, I)
+\end{split}
+\end{equation*}
+
+This gives our Wald under the fixed alternative:
+
+\begin{equation*}
+\begin{split}
+W & \equiv \left(\hat{L}^{-1}\sqrt{n}a(\hat{\beta})\right)'\left(\hat{L}^{-1}\sqrt{n}a(\hat{\beta})\right) \\
+ & =na(\hat{\beta})'(\hat{L}^{-1})'\hat{L}^{-1}a(\hat{\beta}) \\
+ & =na(\hat{\beta})'\hat{\Omega}^{-1}a(\hat{\beta}) \rightarrow \chi^{2}_{r}(\kappa)
+\end{split}
+\end{equation*}
+
+Where $\kappa$ is a non-centrality parameter s.t.: \\
+
+$\kappa = \left(L^{-1}\sqrt{n}\delta\right)'\left(L^{-1}\sqrt{n}\delta\right)=\delta'\left(L^{-1}\right)'\sqrt{n}\sqrt{n}L^{-1}\delta=n\delta'\left(L^{-1}\right)'L^{-1}\delta=n\delta'\left(L^{'}\right)^{-1}L^{-1}\delta$
+
+\hspace{3mm}$=n\delta'\left(LL'\right)^{-1}\delta=n\delta'\Omega^{-1}\delta$
+
+\subsection{LM}
+\textbf{(a)} under \Ho \\
+
+$\tilde{\beta}= \ argmin \ Q_{n}(\beta) \ s.t. \ a(\tilde{\beta})=0$ \\
+
+$\implies \tilde{\beta}= \ argmin \left[ Q_{n}(\beta) + a(\beta)'\gamma_{n}\right]$, where $\gamma_{n}$ is a L.M. \& $\mathcal{L}=Q_{n}(\beta) + a(\beta)'\gamma_{n}$\\
+
+F.O.C: \\
+
+$\frac{\partial \mathcal{L}}{\partial \beta}=\frac{\partial}{\partial \beta}Q_{n}(\tilde{\beta})+A'(\tilde{\beta})\gamma_{n}=0$ \\
+
+and \\
+
+$\frac{\partial \mathcal{L}}{\partial \gamma}= a'(\tilde{\beta})=0 \implies \sqrt{n}a'(\tilde{\beta})=0$ \\
+
+Now, applying a mean value expansion to the second F.O.C. yields: \\
+
+$\sqrt{n}a(\tilde{\beta})=\sqrt{n}a(\beta^{0})+A(\bar{\beta})\sqrt{n}(\tilde{\beta}-\beta^{0})+o_{p}(1)$ and under the null \Ho, \ So: \\
+
+$\sqrt{n}a(\tilde{\beta})=A(\bar{\beta})\sqrt{n}(\tilde{\beta}-\beta^{0})+o_{p}(1)$ call this \circled{1} \\
+
+Now, applying a mean value expansion to the first term in the first F.O.C. yields: \\
+
+$\frac{\partial}{\partial \beta}Q_{n}(\tilde{\beta})=\frac{\partial}{\partial \beta}Q_{n}(\beta^{0})+ \frac{\partial^{2}}{\partial \beta \partial \beta'}Q(\bar{\beta})(\tilde{\beta}-\beta^{0}) +o_{p}(1)$ \\
+
+$\implies \sqrt{n}\frac{\partial}{\partial \beta}Q_{n}(\tilde{\beta})=\sqrt{n}\frac{\partial}{\partial \beta}Q_{n}(\beta^{0})+ \frac{\partial^{2}}{\partial \beta \partial \beta'}Q(\bar{\beta})\sqrt{n}(\tilde{\beta}-\beta^{0}) +o_{p}(1)$ \\
+
+\hspace{30.5mm}$=\sqrt{n}\frac{\partial}{\partial \beta}Q_{n}(\beta^{0})- \Sigma \sqrt{n}(\tilde{\beta}-\beta^{0}) +o_{p}(1)$ call this \circled{2} \\
+
+Note: $-\Sigma= \frac{\partial^{2}}{\partial \beta \partial \beta'}Q(\bar{\beta})$ under the assumption that the model is correctly specified\\
+
+Now,  $A(\tilde{\beta}) \inprob A_{0}$: \\
+
+$A(\tilde{\beta})'\gamma_{n}=A_{0}'\sqrt{n}\gamma_{n}+\left( A'(\tilde{\beta})-A_{0}\right)'\sqrt{n}\gamma_{n}=A_{0}'\sqrt{n}\gamma_{n}+o_{p}(1)$ call this \circled{3} \\
+
+Plugging \circled{1},  \circled{2} \& \circled{3} into the F.O.C.s gives: \\
+
+$\Sigma\sqrt{n}(\tilde{\beta}-\beta^{0})+A_{0}'\sqrt{n}\gamma_{n}=\sqrt{n}\frac{\partial}{\partial \beta} Q_{n}(\beta^{0})$\\
+
+and \\
+
+$A_{0}\sqrt{n}(\tilde{\beta}-\beta^{0})=0$ \\
+
+$\implies \sqrt{n}\gamma_{n}=(A_{0}\Sigma^{-1}A_{0}')^{-1}A\Sigma^{-1}\sqrt{n}\frac{\partial}{\partial \beta} Q_{n}(\beta^{0})-(A_{0}\Sigma^{-1}A_{0}')^{-1}\sqrt{n}a(\beta^{0})+o_{p}(1)$\\
+
+and \\
+
+$\implies \sqrt{n}(\tilde{\beta}-\beta^{0})=\left[\Sigma^{-1}\Sigma^{-1}A_{0}^{-1}(A_{0}\Sigma^{-1})^{-1}A_{0}\Sigma^{-1}\right]\sqrt{n}\frac{\partial}{\partial \beta} Q_{n}(\beta^{0})+o_{p}(1)$\\
+
+$\sqrt{n}\gamma_{n}=\Omega^{-1}A\Sigma^{-1}\sqrt{n}\frac{\partial}{\partial \beta} Q_{n}(\beta^{0})-\Omega^{-1}\sqrt{n}a(\beta^{0})+o_{p}(1)$\\
+
+\hspace{10.5mm}$=\Omega^{-1}A\Sigma^{-1}\sqrt{n}\frac{\partial}{\partial \beta} Q_{n}(\beta^{0})+o_{p}(1)$ (Since under the null $a(\beta^{0})=0$)\\
+
+and \circled{B} \ : $ \sqrt{n}\frac{\partial}{\partial \beta}Q_{n}(\beta^{0}) \indist N(0,\Sigma)$ \\
+
+$\implies \sqrt{n}\gamma_{n} \indist N(0,\Omega^{-1}A_{0}\Sigma^{-1}\Sigma \Sigma^{-1}A_{0}'\Omega^{-1})$ \\
+
+\hspace{20mm}$\indist N(0,\Omega^{-1}A_{0} \Sigma^{-1}A_{0}'\Omega^{-1})$ \\
+
+\hspace{20mm}$\indist N(0,\Omega^{-1}\Omega\Omega^{-1})$ \\
+
+\hspace{20mm}$\indist N(0,\Omega^{-1})$ \\
+
+$\implies L'\sqrt{n}\gamma_{n} \indist N(0,I)$ \\
+
+Finally yielding our LM statistic under the null:\\
+
+$LM \equiv \left(\gamma_{n}'\sqrt{n}\tilde{L}'\right)\left(\gamma_{n}'\sqrt{n}\tilde{L}'\right)'$\\
+
+\hspace{7.5mm}$=n\gamma_{n}'\tilde{L}\tilde{L}'\gamma_{n}$ \\
+
+\hspace{7.5mm}$=n\gamma_{n}'\tilde{\Omega}\gamma_{n}$ \\
+
+\hspace{7.5mm}$=n\gamma_{n}'A(\tilde{\beta})\tilde{\Sigma}^{-1}A'(\tilde{\beta})\gamma_{n}$ \\
+
+\hspace{7.5mm}$=n\left[A'(\tilde{\beta})\gamma_{n}\right]'\tilde{\Sigma}^{-1}\left[A'(\tilde{\beta})\gamma_{n}\right]$ \\
+
+\hspace{7.5mm}$=\left[\sqrt{n}\frac{\partial}{\partial \beta}Q_{n}(\tilde{\beta})\right]'\tilde{\Sigma}^{-1}\left[\sqrt{n}\frac{\partial}{\partial \beta}Q_{n}(\tilde{\beta})\right] \rightarrow \chi_{r}^{2}$ \\
+
+\noindent
+\textbf{(b)} $H_{l}: \ a(\beta^{0})=\frac{\delta}{\sqrt{n}}$ \\
+
+from (a) we had: \\
+
+$\sqrt{n}\gamma_{n}=\Omega^{-1}A\Sigma^{-1}\sqrt{n}\frac{\partial}{\partial \beta} Q_{n}(\beta^{0})-\Omega^{-1}\sqrt{n}a(\beta^{0})+o_{p}(1)$\\
+
+and plugging in $a(\beta^{0})=\frac{\delta}{\sqrt{n}}$ from $H_{l}$ gives:\\
+
+$\sqrt{n}\gamma_{n}=\Omega^{-1}A\Sigma^{-1}\sqrt{n}\frac{\partial}{\partial \beta} Q_{n}(\beta^{0})-\Omega^{-1}\sqrt{n}\frac{\delta}{\sqrt{n}}+o_{p}(1)$ \\
+
+\hspace{10.5mm}$=\Omega^{-1}A\Sigma^{-1}\sqrt{n}\frac{\partial}{\partial \beta} Q_{n}(\beta^{0})-\Omega^{-1}\delta+o_{p}(1)$ \\
+
+and \circled{B} \ : $ \sqrt{n}\frac{\partial}{\partial \beta}Q_{n}(\beta^{0}) \indist N(0,\Sigma)$ \\
+
+$\implies \Omega^{-1}A\Sigma^{-1}\sqrt{n}\frac{\partial}{\partial \beta} Q_{n}(\beta^{0}) \indist N\left(0,\Omega^{-1}A_{0}\Sigma^{-1}\Sigma\Sigma^{-1}A_{0}'\Omega^{-1}\right)$ \\
+
+\hspace{49mm}$\indist N\left(0,\Omega^{-1}A_{0}\Sigma^{-1}A_{0}'\Omega^{-1}\right)$ \\
+
+\hspace{49mm}$\indist N\left(0,\Omega^{-1}\Omega\Omega^{-1}\right)$ \\
+
+\hspace{49mm}$\indist N\left(0,\Omega^{-1}\right)$ \\
+
+$\implies \sqrt{n}\gamma_{n} \indist N\left(-\Omega^{-1}\delta,\Omega^{-1})\right)$ \\
+
+$\implies L'\sqrt{n}\gamma_{n} \indist N\left(-L'\Omega^{-1}\delta, I)\right)$ \\
+
+Which gives us our LM under $H_{l}$ \ : \\
+
+$LM=\left(\gamma_{n}'\sqrt{n}\tilde{L}'\right)\left(\tilde{L}'\sqrt{n}\gamma_{n}\right)' \rightarrow \chi_{r}^{2}(\kappa)$ \\
+
+Where $\kappa$ is a non-centrality parameter s.t.: \\
+
+$\kappa = \left(L'\Omega^{-1}\delta\right)'\left(L'\Omega^{-1}\delta\right)=\delta'\Omega^{-1} LL' \Omega^{-1}\delta=\delta'\Omega^{-1} \Omega \Omega^{-1}\delta=\delta'\Omega^{-1}\delta$ \\
+
+\noindent
+\textbf{(c)} under $H_{f}: \ a(\beta^{0})\neq 0$ \\
+
+again from (a) we had: \\
+
+$\sqrt{n}\gamma_{n}=\Omega^{-1}A\Sigma^{-1}\sqrt{n}\frac{\partial}{\partial \beta} Q_{n}(\beta^{0})-\Omega^{-1}\sqrt{n}a(\beta^{0})+o_{p}(1)$\\
+
+Let's call our choice of a fixed alternative $\delta$ s.t.  $a(\beta^{0})= \delta$ \\
+
+$\implies \sqrt{n}\gamma_{n}=\Omega^{-1}A\Sigma^{-1}\sqrt{n}\frac{\partial}{\partial \beta} Q_{n}(\beta^{0})-\Omega^{-1}\sqrt{n}\delta+o_{p}(1)$
+
+Again \circled{B} \ : $ \sqrt{n}\frac{\partial}{\partial \beta}Q_{n}(\beta^{0}) \indist N(0,\Sigma)$ \\
+
+$\implies \Omega^{-1}A\Sigma^{-1}\sqrt{n}\frac{\partial}{\partial \beta} Q_{n}(\beta^{0}) \indist N\left(0,\Omega^{-1}\right)$ \\
+
+$\implies \sqrt{n}\gamma_{n} \indist N\left(-\Omega^{-1}\sqrt{n}\delta,\Omega^{-1})\right)$ \\
+
+$\implies L'\sqrt{n}\gamma_{n} \indist N\left(-L'\Omega^{-1}\sqrt{n}\delta, I)\right)$ \\
+
+Which gives us our LM under $H_{f}$ \ : \\
+
+$LM=\left(\gamma_{n}'\sqrt{n}\tilde{L}'\right)\left(\tilde{L}'\sqrt{n}\gamma_{n}\right)' \rightarrow \chi_{r}^{2}(\kappa)$ \\
+
+Where $\kappa$ is a non-centrality parameter s.t.: \\
+
+$\kappa = \left(L'\Omega^{-1}\delta\sqrt{n}\right)'\left(L'\Omega^{-1}\delta\sqrt{n}\right)=\delta'\Omega^{-1} L\sqrt{n}\sqrt{n}L' \Omega^{-1}\delta=n\delta'\Omega^{-1} \Omega \Omega^{-1}\delta=n\delta'\Omega^{-1}\delta$ \\
+
+
+\subsection{LR}
+
+\noindent
+\textbf{(a)} under \Ho \\
+
+$Q_{n}(\beta^{0})=Q_{n}(\hat{\beta})+\frac{\partial}{\partial \beta}Q_{n}(\hat{\beta})(\beta^{0}-\hat{\beta})+\frac{1}{2}(\beta^{0}-\hat{\beta})'\frac{\partial^{2}}{\partial \beta \partial \beta'}Q_{n}(\bar{\beta})(\beta^{0}-\hat{\beta})$ \\
+
+$Q_{n}(\beta^{0})=Q_{n}(\hat{\beta})+\frac{1}{2}(\beta^{0}-\hat{\beta})'\frac{\partial^{2}}{\partial \beta \partial \beta'}Q_{n}(\bar{\beta})(\beta^{0}-\hat{\beta})$ Since F.O.C. $\implies \frac{\partial}{\partial \beta}Q_{n}(\hat{\beta})(\beta^{0}-\hat{\beta})=0$ \\
+
+When correctly specified $\frac{\partial^{2}}{\partial \beta \partial \beta'}Q_{n}(\bar{\beta})=-\Sigma$ So,\\
+
+$Q_{n}(\beta^{0})=Q_{n}(\hat{\beta})+\frac{1}{2}(\beta^{0}-\hat{\beta})'\frac{\partial^{2}}{\partial \beta \partial \beta'}Q_{n}(\bar{\beta})(\beta^{0}-\hat{\beta})$ \\
+
+$0=Q_{n}(\hat{\beta})-Q_{n}(\beta^{0})+\frac{1}{2}(\beta^{0}-\hat{\beta})'\frac{\partial^{2}}{\partial \beta \partial \beta'}Q_{n}(\bar{\beta})(\beta^{0}-\hat{\beta})$ \\
+
+$Q_{n}(\hat{\beta})-Q_{n}(\beta^{0})=-\frac{1}{2}(\beta^{0}-\hat{\beta})'\frac{\partial^{2}}{\partial \beta \partial \beta'}Q_{n}(\bar{\beta})(\beta^{0}-\hat{\beta})$ \\
+
+$2\left[Q_{n}(\hat{\beta})-Q_{n}(\beta^{0})\right]=-(\beta^{0}-\hat{\beta})'\frac{\partial^{2}}{\partial \beta \partial \beta'}Q_{n}(\bar{\beta})(\beta^{0}-\hat{\beta})$ \\
+
+$2\left[Q_{n}(\hat{\beta})-Q_{n}(\beta^{0})\right]=(\beta^{0}-\hat{\beta})'\Sigma(\beta^{0}-\hat{\beta})$ \ multiply by n \\
+
+$2n\left[Q_{n}(\hat{\beta})-Q_{n}(\beta^{0})\right]=\sqrt{n}(\hat{\beta}-\beta^{0})'\Sigma\sqrt{n}(\hat{\beta}-\beta^{0})$ \\ 
+
+We need to find asymptotic distribution of $\sqrt{n}(\hat{\beta}-\beta^{0})$
+
+$\sqrt{n}(\hat{\beta}-\beta^{0})=\Sigma^{-1}A_{0}'\Omega^{-1}A_{0}\Sigma^{-1}\sqrt{n}\frac{\partial}{\partial \beta}Q_{n}(\beta^{0})+\Sigma^{-1}A_{0}'\Omega^{-1}\sqrt{n}a(\beta^{0})+o_{p}(1)$ \\
+
+\Ho$\implies \Sigma^{-1}A_{0}'\Omega^{-1}\sqrt{n}a(\beta^{0})=0$ so, \\
+
+$\sqrt{n}(\hat{\beta}-\beta^{0})=\Sigma^{-1}A_{0}'\Omega^{-1}A_{0}\Sigma^{-1}\sqrt{n}\frac{\partial}{\partial \beta}Q_{n}(\beta^{0})+o_{p}(1)$ \\
+
+\circled{B} \ : $ \sqrt{n}\frac{\partial}{\partial \beta}Q_{n}(\beta^{0}) \indist N(0,\Sigma)$ \\
+
+$\implies \sqrt{n}(\hat{\beta}-\beta^{0}) \indist N\left(0,\Sigma^{-1}A_{0}'\Omega^{-1}A_{0}\Sigma^{-1}\Sigma\Sigma^{-1}A_{0}'\Omega^{-1}A_{0}\Sigma^{-1}\right)$ \\
+
+\hspace{30mm}$ \indist N\left(0,\Sigma^{-1}A_{0}'\Omega^{-1}A_{0}\Sigma^{-1}A_{0}'\Omega^{-1}A_{0}\Sigma^{-1}\right)$ \\
+
+\hspace{30mm}$ \indist N\left(0,\Sigma^{-1}A_{0}'\Omega^{-1}\Omega\Omega^{-1}A_{0}\Sigma^{-1}\right)$ \\
+
+\hspace{30mm}$ \indist N\left(0,\Sigma^{-1}A_{0}'\Omega^{-1}A_{0}\Sigma^{-1}\right)$ \\
+
+$\implies L^{-1}A_{0}\sqrt{n}(\hat{\beta}-\beta^{0}) \indist N(0,I)$ \\
+
+So, \\
+
+$LR(\beta^{0})=2n\left[Q_{n}(\hat{\beta})-Q_{n}(\beta^{0})\right]$ \\
+
+$=\sqrt{n}(\hat{\beta}-\beta^{0})'\Sigma\sqrt{n}(\hat{\beta}-\beta^{0})$ \\
+
+$=\left[\sqrt{n}\frac{\partial}{\partial \beta}Q_{n}(\beta^{0}\right]'\Sigma^{-1}A_{0}'\Omega^{-1}A_{0}\Sigma^{-1}\Sigma\Sigma^{-1}A_{0}'\Omega^{-1}A_{0}\Sigma^{-1}\left[\sqrt{n}\frac{\partial}{\partial \beta}Q_{n}(\beta^{0}\right]$ \\
+
+$=\left[\sqrt{n}\frac{\partial}{\partial \beta}Q_{n}(\beta^{0}\right]'\Sigma^{-1}A_{0}'\Omega^{-1}A_{0}\Sigma^{-1}A_{0}'\Omega^{-1}A_{0}\Sigma^{-1}\left[\sqrt{n}\frac{\partial}{\partial \beta}Q_{n}(\beta^{0}\right]$ \\
+
+$=\left[\sqrt{n}\frac{\partial}{\partial \beta}Q_{n}(\beta^{0}\right]'\Sigma^{-1}A_{0}'\Omega^{-1}\Omega\Omega^{-1}A_{0}\Sigma^{-1}\left[\sqrt{n}\frac{\partial}{\partial \beta}Q_{n}(\beta^{0}\right]$ \\
+
+$=\left[\sqrt{n}\frac{\partial}{\partial \beta}Q_{n}(\beta^{0}\right]'\Sigma^{-1}A_{0}'\Omega^{-1}A_{0}\Sigma^{-1}\left[\sqrt{n}\frac{\partial}{\partial \beta}Q_{n}(\beta^{0}\right]$ \\
+
+$=\left[\sqrt{n}\frac{\partial}{\partial \beta}Q_{n}(\beta^{0}\right]'\Sigma^{-1}A_{0}'L^{-1}(L{-1})'A_{0}\Sigma^{-1}\left[\sqrt{n}\frac{\partial}{\partial \beta}Q_{n}(\beta^{0}\right]$ \\
+
+$\circled{B} \implies\left[\sqrt{n}\frac{\partial}{\partial \beta}Q_{n}(\beta^{0}\right]'\Sigma^{-1}A_{0}'L^{-1} \indist N(0,(L^{-1})'A_{0}'\Sigma^{-1}\Sigma\Sigma^{-1}A_{0}L^{-1})$ \\
+
+\hspace{61mm}$\indist N(0,(L^{-1})'A_{0}'\Sigma^{-1}A_{0}L^{-1})$ \\
+
+\hspace{61mm}$\indist N(0,(L^{-1})'\Omega L^{-1})$ \\
+
+\hspace{61mm}$\indist N(0,I)$ 
+
+$\implies LR(\beta^{0}) \rightarrow \chi_{r}^{2}$ \\
+
+\noindent
+\textbf{(b)} under $H_{l}: \ a(\beta^{0})= \frac{\delta}{\sqrt{n}}$ 
+
+From (a):
+
+$\sqrt{n}(\hat{\beta}-\beta^{0})=\Sigma^{-1}A_{0}'\Omega^{-1}A_{0}\Sigma^{-1}\sqrt{n}\frac{\partial}{\partial \beta}Q_{n}(\beta^{0})+\Sigma^{-1}A_{0}'\Omega^{-1}\sqrt{n}a(\beta^{0})+o_{p}(1)$ \\ 
+
+We showed the first term $\indist N(0, \Sigma^{-1}A_{0}'\Omega^{-1}A_{0}\Sigma^{-1})$ So, \\
+
+$\sqrt{n}(\hat{\beta}-\beta^{0}) \indist N(\Sigma^{-1}A_{0}'\Omega^{-1}\delta, \Sigma^{-1}A_{0}'\Omega^{-1}A_{0}\Sigma^{-1})$ Since plugging in, \\
+
+$a(\beta^{0})= \frac{\delta}{\sqrt{n}}$, gives $\Sigma^{-1}A_{0}'\Omega^{-1}\sqrt{n}a(\beta^{0})\delta=\Sigma^{-1}Ao'\Omega^{-1}\delta$ \\
+
+So, $L^{-1}A_{0}\sqrt{n}(\hat{\beta}-\beta^{0}) \indist N(L^{-1}A_{0}\Sigma^{-1}A_{0}'\Omega^{-1}\delta, I)$ \\
+
+\hspace{37mm} $\indist N(L^{-1}\Omega'\Omega^{-1}\delta, I)$ \\
+
+\hspace{37mm} $\indist N(L^{-1}\delta, I)$ \\
+
+$\implies LR \rightarrow \chi_{r}^{2}(\kappa)$ \\
+
+Where $\kappa$ is a non-centrality parameter s.t.: \\
+
+$\kappa=\left(L^{-1}\delta\right)'\left(L^{-1}\delta\right)=\delta'\Omega^{-1}\delta$ \\
+
+\noindent
+\textbf{(c)} under $H_{f}: \ a(\beta^{0})\neq 0$ \\
+
+From (a):
+
+$\sqrt{n}(\hat{\beta}-\beta^{0})=\Sigma^{-1}A_{0}'\Omega^{-1}A_{0}\Sigma^{-1}\sqrt{n}\frac{\partial}{\partial \beta}Q_{n}(\beta^{0})+\Sigma^{-1}A_{0}'\Omega^{-1}\sqrt{n}a(\beta^{0})+o_{p}(1)$ \\ 
+
+Again, we showed the first term $\indist N(0, \Sigma^{-1}A_{0}'\Omega^{-1}A_{0}\Sigma^{-1})$ So, \\
+
+$\sqrt{n}(\hat{\beta}-\beta^{0}) \indist N(\Sigma^{-1}A_{0}'\Omega^{-1}\sqrt{n}\delta, \Sigma^{-1}A_{0}'\Omega^{-1}A_{0}\Sigma^{-1})$ Since plugging in, \\
+
+$a(\beta^{0})= \delta$, gives $\Sigma^{-1}A_{0}'\Omega^{-1}\sqrt{n}a(\beta^{0})\delta=\Sigma^{-1}Ao'\Omega^{-1}\sqrt{n}\delta$ \\
+
+So, $L^{-1}A_{0}\sqrt{n}(\hat{\beta}-\beta^{0}) \indist N(L^{-1}A_{0}\Sigma^{-1}A_{0}'\Omega^{-1}\sqrt{n}\delta, I)$ \\
+
+\hspace{37mm} $\indist N(L^{-1}\Omega'\Omega^{-1}\sqrt{n}\delta, I)$ \\
+
+\hspace{37mm} $\indist N(L^{-1}\sqrt{n}\delta, I)$ \\
+
+$\implies LR \rightarrow \chi_{r}^{2}(\kappa)$ \\
+
+Where $\kappa$ is a non-centrality parameter s.t.: \\
+
+$\kappa=\left(L^{-1}\delta\sqrt{n}\right)'\left(L^{-1}\delta\sqrt{n}\right)=n\delta'\Omega^{-1}\delta$ \\
+
+
+\section{Show that the three tests are asymptotically equivalent under $H_{0}$ and $H_{l}$ under standard GMM assumptions}
+
+\textbf{(a)} under $H_{0}$
+
+$W,LM,LR \indist \chi_{r}^{2}$ as shown in Part 1, so they are asymptotically equivalent under the $H_{0}$ \\
+
+\noindent
+\textbf{(a)} under $H_{l}$
+
+$W,LM,LR \indist \chi_{r}^{2}(\kappa)$, where $\kappa=\delta'\Omega^{-1}\delta$ as shown in Part 1, so they are asymptotically equivalent under $H_{l}$
+
+\section{Show that the three tests are consistent under $H_{f}$}
+
+
+$W,LM,LR \indist \chi_{r}^{2}(\kappa)$, where $\kappa=n\delta'\Omega^{-1}\delta$ As shown in Part 1, and: \\
+
+$\underset{n\rightarrow\infty}{lim}P\left(W>\chi_{r}^{2}\right)=\underset{n\rightarrow\infty}{lim}P\left(LM>\chi_{r}^{2}\right)=\underset{n\rightarrow\infty}{lim}P\left(LR>\chi_{r}^{2}\right)=1$ \\
+
+So the three tests are consistent under $H_{f}$.
+
+\section{Suppose that we are interested in two null hypotheses: $H_{0}^{\beta} \ : \ \beta=1$ and $H_{o}^{\gamma} \ : \ \gamma=0$ in the context of Problem-1(c) of HW-2. Test these two null hypotheses separately using Wald, LM, and LR tests.  Perform the tests for both sample periods.}
+
+\vspace{2.5mm}
+\noindent
+\begin{center}
+\begin{tabular}{|l| l |l|}
+\hline\hline
+\multicolumn{3}{c}{\textbf{W, LM, LR Results}} \\
+\hline\hline \rowcolor{Gray}
+ W $\beta$ Pre-Volcker & LM $\beta$ Pre-Volcker & LR $\beta$ Pre-Volcker  \\
+ \hline
+ 1.54e+03 & 5.34e-04 & 466.10 \\
+ \hline
+ (0) & (.98) & (0) \\
+\hline  \rowcolor{Gray}
+W $\gamma$ Pre-Volcker & LM $\gamma$ Pre-Volcker & LR $\gamma$ Pre-Volcker  \\
+\hline
+9.34e+04 & 1.80 & 1.85e+03 \\
+\hline
+ (0) & (.18) & (0) \\
+\hline  \rowcolor{Gray}
+W $\beta$ Volcker-Greenspan & LM $\beta$ Volcker-Greenspan & LR $\beta$ Volcker-greenspan  \\
+\hline
+370.10 & 1.37e-05 & 583.44 \\
+\hline
+ (0) & (1.00) & (0) \\
+\hline  \rowcolor{Gray}
+W $\gamma$ Volcker-Greenspan & LM $\gamma$ Volcker-Greenspan & LR $\gamma$ Volcker-Greenspan  \\
+\hline
+9.73e+04 & .19 & 3.20e+03\\
+\hline
+ (0) & (.66) & (0) \\
+  \hline\hline
+\end{tabular} 
+\end{center} 
+Note: numbers in parenthesis are p-values for each statistic.
+
+\section{Ghysels, Hill, and Motegi(2013) Question}
+\subsection{Preliminary}
+
+(a) \ $\mathbb{E}[x_{t}]=0$ \\
+\textbf{Proof:} \\
+
+$\mathbb{E}[x_{t}]=\mathbb{E}\left[\phi x_{t-1} +\eta_{t}\right]=\phi\mathbb{E}[x_{t-1}]=\phi\mathbb{E}[x_{t}]$ by the stationarity of $\phi$ \\
+
+$\mathbb{E}[x_{t}]=\phi\mathbb{E}[x_{t}]$ \\
+
+$\mathbb{E}[x_{t}]-\phi\mathbb{E}[x_{t}]=0$
+
+$(1-\phi)\mathbb{E}[x_{t}]=0 \implies \mathbb{E}[x_{t}]=0 $ \\
+
+\noindent
+(b) \ $\mathbb{E}[x_{t}^{2}]=\frac{1}{1-\phi^{2}}\equiv \gamma_{0}$ \\
+\textbf{Proof:} \\
+
+$\mathbb{E}[x_{t}^{2}]=\mathbb{E}\left[(\phi x_{t-1} +\eta_{t})(\phi x_{t-1} +\eta_{t})\right]=\phi^{2}\mathbb{E}\left[x_{t-1}x_{t-1}\right]+0+\mathbb{E}[\eta_{t}\eta_{t}]$ \\
+
+$\mathbb{E}[x_{t}^{2}]=\phi^{2}\mathbb{E}\left[x_{t}x_{t}\right]+1$ again by stationarity of $\phi$ and since $\eta{t} \stackrel{i.i.d.}{\sim}(0,1)$ \\
+
+$\mathbb{E}[x_{t}^{2}]-\phi^{2}\mathbb{E}\left[x_{t}x_{t}\right]=1$ \\
+
+$(1-\phi^{2})\mathbb{E}[x_{t}^{2}]=1$ \\
+
+$\mathbb{E}[x_{t}^{2}]=\frac{1}{(1-\phi^{2})}\equiv\gamma_{0}$ \\
+
+\noindent
+(c) \ $\mathbb{E}[x_{t}x_{t-1}]=\frac{\phi}{1-\phi^{2}}\equiv \gamma_{1}$ \\
+\textbf{Proof:} \\
+
+$\mathbb{E}[x_{t}x_{t-1}]=\mathbb{E}\left[(\phi x_{t-1}+\eta_{t})(\phi x_{t-2}+\eta_{t-1})\right]$ \\
+
+$\mathbb{E}[x_{t}x_{t-1}]=\phi^{2}\mathbb{E}\left[(x_{t-1}x_{t-2}\right]+0+\mathbb{E}\left[\eta_{t}\eta_{t-1})\right]$ \\
+
+$\mathbb{E}[x_{t}x_{t-1}]=\phi^{2}\mathbb{E}\left[(x_{t}x_{t-1}\right]+\phi$ \\
+
+$\mathbb{E}[x_{t}x_{t-1}]-\phi^{2}\mathbb{E}\left[(x_{t}x_{t-1}\right]=\phi$ \\
+
+$(1-\phi^{2})\mathbb{E}[x_{t}x_{t-1}]=\phi$ \\
+
+$(1-\phi^{2})\mathbb{E}[x_{t}x_{t-1}]=\frac{\phi}{(1-\phi^{2})}\equiv\gamma_{1}$
+
+
+
+\subsection{Question (a)}
+\textbf{What is the probability limit of $\hat{\beta}$ ?}
+\begin{equation*}
+\begin{split}
+\hat{\beta} & = \frac{1}{T}\sum_{t=1}^{T}(x_{t-1}^{2})^{-1}(\frac{1}{T}\sum_{t=1}^{T}x_{t-1}y_{t}) \\
+ & = \gamma_{0}^{-1}\left(\frac{1}{T}\sum_{t=1}^{T}x_{t-1}y_{t}\right) + o_{p}(1) \
+ \text{Because} \ \frac{1}{T}\sum_{t=1}^{T}x_{t-1}^{2} \inprob \mathbb{E}(x_{t-1}^{2}) \text(by LLN) \\
+ & \ \& \ \mathbb{E}(x_{t-1}^{2})=\mathbb{E}(x_{t}^{2})=\gamma_{0} \ \text{by stationarity of} \ \phi \\
+ & = \gamma_{0}^{-1} \left[\frac{1}{T}\sum_{t=1}^{T}x_{t-1}\left(c_{1}x_{t-1}+c_{2}x_{t-2}+\epsilon_{t}\right) \right] + \ o_{p}(1) \\
+ & = \gamma_{0}^{-1}\left[c_{1}\frac{1}{T}\sum_{t=1}^{T}x_{t-1}^{2} + c_{2}\frac{1}{T}\sum_{t=1}^{T}x_{t-1}x_{t-2} + \frac{1}{T}\sum_{t=1}^{T}x_{t-1}\epsilon_{t}\right] + o_{p}(1) \\
+ & = \gamma_{0}^{-1}\left(c_{1}\gamma_{0}+c_{2}\gamma_{1}\right) + \ o_{p}(1) \inprob c1+\frac{\gamma_{1}}{\gamma_{0}}c_{2} \ \text{where}, \\
+ & \frac{1}{T}\sum_{t=1}^{T}x_{t-1}^{2} \inprob \gamma_{0} \ \text{,} \  \frac{1}{T}\sum_{t=1}^{T}x_{t-1}x_{t-2} \inprob \gamma_{1} \ \text{, and} \ \frac{1}{T}\sum_{t=1}^{T}x_{t-1}\epsilon_{t}\inprob 0 \\
+ & \text{because} \  \frac{1}{T}\sum_{t=1}^{T}x_{t-1}\epsilon_{t} \inprob \mathbb{E}(x_{t-1}\epsilon_{t}) \ \text{(by LLN)} \ = \mathbb{E}(x_{t-1}\mathbb{E}(\epsilon_{t}))=0 \ \text{, since} \ \mathbb{E}(\epsilon_{t})=0
+\end{split}
+\end{equation*} 
+
+\noindent
+\textbf{Under what conditions is $\hat{\beta}$  consistent for $c_{1}$?} \\
+
+$\hat{\beta} \inprob c_{1}$ when: \\
+
+$(1) \ \phi=0$ ($x_{t-1} \ \& \ x_{t-2}$ are uncorrelated) \\
+
+$(2) \ c_{2}=0$ ($x_{t-2}$ is irrelevant i.e. our model correctly specified)
+
+\subsection{Question (b)}
+\textbf{Formulate the Wald statistic with respect to $H_{0} \ : \ \beta=0$ and call it $W$.  Under non-causality what is the asymptotic distribution of $W$?} \\
+
+From above we have:
+
+\begin{equation*}
+\begin{split}
+\hat{\beta} & = \gamma_{0}^{-1}\left[c_{1}\frac{1}{T}\sum_{t=1}^{T}x_{t-1}^{2} + c_{2}\frac{1}{T}\sum_{t=1}^{T}x_{t-1}x_{t-2} + \frac{1}{T}\sum_{t=1}^{T}x_{t-1}\epsilon_{t}\right] + o_{p}(1) \text{, multiply by} \sqrt{T} \\
+\sqrt{T}\hat{\beta} & =\sqrt{T} \gamma_{0}^{-1}\left[c_{1}\frac{1}{T}\sum_{t=1}^{T}x_{t-1}^{2} + c_{2}\frac{1}{T}\sum_{t=1}^{T}x_{t-1}x_{t-2} + \frac{1}{T}\sum_{t=1}^{T}x_{t-1}\epsilon_{t}\right] + o_{p}(1) \\
+\sqrt{T}\hat{\beta} & =\sqrt{T} \gamma_{0}^{-1}\left[c_{1}\frac{1}{T}\sum_{t=1}^{T}x_{t-1}^{2} + c_{2}\frac{1}{T}\sum_{t=1}^{T}x_{t-1}x_{t-2} \right] + \sqrt{T} \gamma_{0}^{-1}\left[\frac{1}{T}\sum_{t=1}^{T}x_{t-1}\epsilon_{t}\right] + o_{p}(1) \\
+ \text{again:} & \ \  \frac{1}{T}\sum_{t=1}^{T}x_{t-1}^{2} \inprob \gamma_{0} \ \text{, and} \  \frac{1}{T}\sum_{t=1}^{T}x_{t-1}x_{t-2} \inprob \gamma_{1} \ \text{, so} \\
+\sqrt{T}\hat{\beta}  & = \sqrt{T}\gamma_{0}^{-1}\left(c_{1}\gamma_{0}+c_{2}\gamma_{1} + \frac{1}{T}\sum_{t=1}^{T}x_{t-1}\epsilon_{t}\right) + \ o_{p}(1)  \\
+\sqrt{T}\hat{\beta} & =\sqrt{T} \beta^{0}+\gamma_{0}^{-1}\frac{1}{\sqrt{T}}\sum_{t=1}^{T}x_{t-1}\epsilon_{t}+ o_{p}(1) \ \text{, where} \ \beta^{0}\equiv c_{1}+\frac{\gamma_{1}}{\gamma_{0}}c_{2} \\
+\text{note:} & \ \  \frac{1}{\sqrt{T}}\sum_{t=1}^{T}x_{t-1}\epsilon_{t} \indist N(0,\gamma_{0}) \ \text{, since:} \\
+ & Var \ = \mathbb{E}\left[(x_{t-1}\epsilon_{t})^2\right]= \mathbb{E}\left[x_{t-1}^{2}\epsilon_{t}^{2}\right]=\mathbb{E}\left[x_{t-1}^{2}\mathbb{E}(\epsilon_{t}^{2}|\textbf{I}_{t-1}\right]= \mathbb{E}\left[x_{t-1}^{2}\times 1\right]=\mathbb{E}\left[x_{t-1}^{2}\right]=\gamma_{0} \\
+ \implies & \sqrt{T}\hat{\beta} \indist N(lim \ \sqrt{T}\beta^{0}, \ \gamma_{0}^{-1}) \\
+\text{Now} & \ \text{we need to standardize the variance so we pre-multiply$\sqrt{T}\hat{\beta}$ by $\sqrt{\gamma_{0}}$:} \\
+ & \sqrt{T}\sqrt{\gamma_{0}}\hat{\beta} \indist N(\sqrt{\gamma_{0}} \ lim \ \sqrt{T}\beta^{0}, 1), \ \text{yielding our Wald statistic:} \\
+W & =\left(\sqrt{T}\sqrt{\gamma_{0}}\hat{\beta}\right)^2 = T\gamma_{0}\hat{\beta}^{2} \indist \chi_{1}^{2}(\kappa), \ \text{where} \ \kappa \  \text{is our noncentrality parameter s.t.} \\
+\kappa & =(\sqrt{\gamma_{0}} \ lim \ \sqrt{T} \beta^{0})^{2}, \ \text{Note:} \ \kappa=0 \iff \beta^{0}=0 \ \text{(because $\gamma_{0}$ can't be zero by definition)}\\
+\text{Under} & \ \text{non-causality:} \  c_{1}=c_{2}=0 \implies \beta^{0} \implies \kappa=0
+\end{split}
+\end{equation*}
+
+\subsection{Question (c)}
+\textbf{Suppose $c_{1}=0$ and $c_{2}\neq0$, a seemingly hard type of Granger causality to detect since our model only has one lag.  Can we get power approaching one? (Put differently, does W diverge to infinity asymptotically?)}\\
+
+\noindent
+From above we note: \\
+
+$\kappa=0 \iff \beta^{0}=0$ \\ 
+\indent
+$\beta^{0}=0 \iff \phi=0$ \\
+\indent
+$\therefore$ \\
+\indent
+$\kappa \neq 0 \iff \phi \neq 0$
+
+\noindent
+So we will still get power approaching one as long as $\phi \neq 0$
+
+\subsection{Question (d)}
+\textbf{In general, under what conditions do you lose power? Are those conditions likely to hold in usual economic applications?}
+
+When $c_{1},c_{2}\neq0$ we will lose power if $\beta^{0}=0$, which will be the case if $c_{2}=-\frac{1}{\phi}c_{1}$, however in typical economic applications it is the case that : $\phi \in (0,1) \ \& \ |c_{1}|>|c_{2}|$.  When these two things hold, we will never get $c_{2}=-\frac{1}{\phi}c_{1}$ and therefore never have $\beta^{0}=0$.  So for common economic applications this is not an issue.
+
+\subsection{Question (e)}
+\textbf{Show that $W$ converges to a non central chi-squared distribution.  Characterize the non centrality parameter $\kappa$ and show that $\kappa=0$ under non-causality.} \\
+
+$\hat{\beta}  = \frac{1}{T}\sum_{t=1}^{T}(x_{t-1}^{2})^{-1}(\frac{1}{T}\sum_{t=1}^{T}x_{t-1}y_{t})$ as before \\
+
+and $ \frac{1}{T}\sum_{t=1}^{T}(x_{t-1}^{2})^{-1} \inprob \mathbb{E}\left[x_{t}^{2}\right]^{-1}=\gamma_{0}^{-1}$ \\
+
+$\implies \hat{\beta}= \gamma_{0}^{-1}\left[\frac{1}{T}\sum_{t=1}^{T}x_{t-1}\left(\frac{c_{1}}{\sqrt{T}}x_{t-1}+\frac{c_{2}}{\sqrt{T}}x_{t-2} +\epsilon_{t}\right)\right]+o_{p}(1)$ \\
+
+$\implies \sqrt{T}\hat{\beta}= \gamma_{0}^{-1}\left[c_{1}\frac{1}{T}\sum_{t=1}^{T}x_{t-1}^{2}+c_{2}\frac{1}{T}\sum_{t=1}^{T}x_{t-1}x_{t-2}+\frac{1}{\sqrt{T}}\sum_{t=1}^{T}x_{t-1}\epsilon_{t}\right]+o_{p}(1)$ \\
+
+Note: $\frac{1}{T}\sum_{t=1}^{T}x_{t-1}^{2} \inprob \gamma_{0} \ \text{,} \  \frac{1}{T}\sum_{t=1}^{T}x_{t-1}x_{t-2} \inprob \gamma_{1} \ \text{, and} \ \frac{1}{\sqrt{T}}\sum_{t=1}^{T}x_{t-1}\epsilon_{t}\indist N(0,\gamma_{0})$ \\
+
+$\implies \sqrt{T}\hat{\beta} \indist N\left(\gamma_{0}c_{1}+\frac{\gamma{1}}{\gamma_{0}}c_{2}, \gamma_{0}^{-1}\gamma_{0}\gamma_{0}^{-1}\right)$
+
+$W=\left(\sqrt{T}\sqrt{\gamma_{0}}\hat{\beta}\right)^2 \rightarrow \chi_{r}^{2}(\kappa)$
+
+Where $\kappa$ is a non-centrality parameter s.t.: \\
+
+$\kappa = \left[\sqrt{\gamma_{0}}c_{1}+\frac{\gamma{1}}{\sqrt{\gamma_{0}}}c_{2}\right]^{2}=\gamma_{0}c_{1}^{2}+\frac{\gamma_{1}^{2}}{\gamma_{0}}c_{2}^{2}+2c_{1}c_{2}\gamma_{1}$ \\
+
+\hspace{3mm}$=\frac{c_{1}^{2}}{1-\phi^{2}}+\left(\frac{\phi}{1-\phi^{2}}\right)^{2}(1-\phi^{2})c_{2}^{2}+\frac{2c_{1}c_{2}\phi}{1-\phi^{2}}$ \\
+
+\hspace{3mm}$=\frac{1}{1-\phi^{2}}\left[c_{1}^{2}+\phi^{2}c_{2}^{2}+2c_{1}c_{2}\phi\right]=\frac{(c_{1}+\phi c_{2})^{2}}{1-\phi^{2}}$
+
+\subsection{Question (f)}
+\begin{equation*}
+\begin{cases}
+F_{0} = \chi_{1}^{2}, \ \text{since} \ c_{1}=c_{2}=0 \\
+F_{1} = \chi_{1}^{2}(\kappa), \ \text{where} \ \kappa=\frac{(c_{1}+\phi c_{2})^{2}}{1-\phi^{2}} \ \text{from Question (e)} 
+\end{cases}
+\end{equation*}
+
+\noindent
+$P(\alpha)=1-F_{1}\left(F_{0}^{-1}(1-\alpha)\right)$ \\
+
+
+
+\subsection{Question (g)}
+\includegraphics[scale=.75]{HW3Q3Graph1}
+
+\includegraphics[scale=0.75]{HW3Q3Graph2}
+
+\subsection{Question (h)}
+As we decreased the correlation between $x_{t}$ and $x_{t-1}$ from $\phi=0.8$ to $\phi=0.2$ the region of no local power is larger, but we still have local power going to one very quickly.
+
+\includegraphics[scale=0.75]{HW3Q3Graph3}
+
+\includegraphics[scale=0.75]{HW3Q3Graph4}
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
